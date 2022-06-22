@@ -1,12 +1,13 @@
 package com.tech1.tech1test.domain;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
 
 @Entity
 @Table(name = "usr")
 public class User {
-    @javax.persistence.Id
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -14,8 +15,25 @@ public class User {
 
     private Integer age;
 
-//    @OneToMany(mappedBy = "article", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-//    private Set<Article> articles;
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id")
+    private List<Article> articles;
+
+    public User() {
+    }
+    public User(Long id, String name, Integer age) {
+        this.id = id;
+        this.name = name;
+        this.age = age;
+    }
+
+    public List<Article> getArticles() {
+        return articles;
+    }
+
+    public void setArticles(List<Article> articles) {
+        this.articles = articles;
+    }
 
     public Long getId() {
         return id;
@@ -37,16 +55,7 @@ public class User {
         return age;
     }
 
-    public void setAge(int age) {
-        this.age = age;
-    }
-
-    public User() {
-    }
-
-    public User(Long id, String name, int age) {
-        this.id = id;
-        this.name = name;
+    public void setAge(Integer age) {
         this.age = age;
     }
 }

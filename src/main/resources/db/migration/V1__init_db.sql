@@ -11,5 +11,7 @@ create table article
     id    bigint not null auto_increment,
     text  varchar(255),
     color varchar(255),
-    primary key (id)
+    primary key (id),
+    user_id int,
+    foreign key (user_id) references usr(id)
 );

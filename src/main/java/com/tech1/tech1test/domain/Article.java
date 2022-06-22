@@ -13,9 +13,16 @@ public class Article {
 
     private String text;
 
+    @Enumerated(EnumType.STRING)
     private Color color;
 
     public Article() {
+    }
+
+    public Article(Long id, String text, Color color) {
+        this.id = id;
+        this.text = text;
+        this.color = color;
     }
 
     public Long getId() {

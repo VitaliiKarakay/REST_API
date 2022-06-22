@@ -1,7 +1,8 @@
-insert into usr values (1,'Vitalii', 28);
-insert into usr values (2,'Igor', 17);
-insert into usr values (3,'Maksim', 56);
-insert into usr values (4,'Olga', 24);
-insert into usr values (5,'Ivan', 22);
-insert into usr values (6,'Oleg', 48);
-insert into usr values (7,'Vasilii', 23);
+insert into usr (name, age)
+values ('Vitalii', 28),
+       ('Igor', 17),
+       ('Maksim', 56),
+       ('Olga', 24),
+       ('Ivan', 22),
+       ('Oleg', 48),
+       ('Vasilii', 23);
