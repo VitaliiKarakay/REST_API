@@ -2,8 +2,7 @@ package com.tech1.tech1test.controllers;
 
 import com.tech1.tech1test.domain.Color;
 import com.tech1.tech1test.domain.User;
-import com.tech1.tech1test.repository.UserRepo;
-import com.tech1.tech1test.services.UserService;
+import com.tech1.tech1test.services.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,11 +12,11 @@ import java.util.List;
 @RequestMapping("users")
 public class UserController {
 
-    private final UserService userService;
+    private final UserServiceImpl userService;
 
     @Autowired
-    public UserController(UserService userService) {
-        this.userService = userService;
+    public UserController(UserServiceImpl userServiceImpl) {
+        this.userService = userServiceImpl;
     }
 
     @GetMapping()
@@ -41,8 +40,9 @@ public class UserController {
         return userService.getUsersByArticleColor(color);
     }
 
-    @GetMapping("/articles/{count}")
-    public List<String> getUserNamesByArticlesCount(@PathVariable int count) {
+    @GetMapping({"/articles/{count}", "/articles"})
+    public List<String> getUserNamesByArticlesCount(@PathVariable(required = false) Integer count) {
+        if (count == null) count = 3;
         return userService.getUserNamesByArticlesCount(count);
     }
 

@@ -1,9 +1,7 @@
 package com.tech1.tech1test.controllers;
 
 import com.tech1.tech1test.domain.Article;
-import com.tech1.tech1test.domain.Color;
-import com.tech1.tech1test.repository.ArticleRepo;
-import com.tech1.tech1test.services.ArticleService;
+import com.tech1.tech1test.services.ArticleServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,11 +11,11 @@ import java.util.List;
 @RequestMapping("articles")
 public class ArticleController {
 
-    private final ArticleService articleService;
+    private final ArticleServiceImpl articleService;
 
     @Autowired
-    public ArticleController(ArticleService articleService) {
-        this.articleService = articleService;
+    public ArticleController(ArticleServiceImpl articleServiceImpl) {
+        this.articleService = articleServiceImpl;
     }
 
     @GetMapping
