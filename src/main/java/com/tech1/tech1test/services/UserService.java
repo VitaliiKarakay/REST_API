@@ -63,4 +63,7 @@ public class UserService {
         userRepo.delete(user);
     }
 
+    public List<String> getUserNamesByArticlesCount(int count) {
+        return userRepo.getUserNamesByArticlesCount(count);
+    }
 }

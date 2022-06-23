@@ -41,6 +41,11 @@ public class UserController {
         return userService.getUsersByArticleColor(color);
     }
 
+    @GetMapping("/articles/{count}")
+    public List<String> getUserNamesByArticlesCount(@PathVariable int count) {
+        return userService.getUserNamesByArticlesCount(count);
+    }
+
     @PostMapping
     public User create(@RequestBody User user) {
         userService.create(user);

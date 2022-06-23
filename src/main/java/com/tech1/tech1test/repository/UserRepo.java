@@ -11,4 +11,7 @@ public interface UserRepo extends JpaRepository<User, Long> {
 
     @Query("from User u JOIN u.articles a where a.color = :color")
     List<User> getUsersByArticle(Color color);
+
+    @Query(nativeQuery = true, value = "select u.name from usr u where (select count(a.id) from article a where a.user_id = u.id) >= :count")
+    List<String> getUserNamesByArticlesCount(int count);
 }
