@@ -24,17 +24,18 @@ public class UserController {
     }
 
     @GetMapping()
-    public List<User> getAllUsers() {
-        return userService.getAll();
+    public ResponseEntity<List<UserDto>> getAllUsers() {
+        List<User> users = userService.getAll();
+        List<UserDto> result = new ArrayList<>();
+        for (User user: users) {
+            result.add(UserDto.fromUser(user));
+        }
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     @GetMapping("{id}")
     public ResponseEntity<UserDto> getUserById(@PathVariable("id") Long id) {
         User user = userService.read(id);
-
-        if (user == null) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }
 
         UserDto result = UserDto.fromUser(user);
         return new ResponseEntity<>(result, HttpStatus.OK);
