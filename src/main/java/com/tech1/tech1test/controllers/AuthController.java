@@ -20,7 +20,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@RequestMapping()
+@RequestMapping("/")
 public class AuthController {
 
     private final AuthenticationManager authenticationManager;
@@ -37,12 +37,12 @@ public class AuthController {
     public ResponseEntity login(@RequestBody AuthenticationRequestDto requestDto) {
         try {
             String username = requestDto.getUsername();
-            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, requestDto.getPassword()));
             User user = userService.findByName(username);
+            String token = jwtProvider.createToken(username, user.getRoles());
+            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, requestDto.getPassword()));
             if (user == null) {
                 throw new UsernameNotFoundException("User with username " + username + " not found");
             }
-            String token = jwtProvider.createToken(username, user.getRoles());
 
             Map<Object, Object> response = new HashMap<>();
             response.put("username", username);

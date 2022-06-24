@@ -1,7 +1,7 @@
 create table usr
 (
     id       bigint       not null auto_increment,
-    name     varchar(255) not null,
+    username     varchar(255) not null,
     password varchar(255) not null,
     age      int          not null,
     status   varchar(100) default 'ACTIVE',
