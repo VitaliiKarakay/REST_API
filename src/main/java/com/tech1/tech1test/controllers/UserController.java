@@ -2,10 +2,14 @@ package com.tech1.tech1test.controllers;
 
 import com.tech1.tech1test.domain.Color;
 import com.tech1.tech1test.domain.User;
+import com.tech1.tech1test.dto.UserDto;
 import com.tech1.tech1test.services.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -20,43 +24,66 @@ public class UserController {
     }
 
     @GetMapping()
-    public List<User> getAllUsers() {
-        return userService.getAll();
+    public ResponseEntity<List<UserDto>> getAllUsers() {
+        List<User> users = userService.getAll();
+        List<UserDto> result = new ArrayList<>();
+        for (User user: users) {
+            result.add(UserDto.fromUser(user));
+        }
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     @GetMapping("{id}")
-    public User getUserById(@PathVariable("id") Long id) {
-        return userService.read(id);
+    public ResponseEntity<UserDto> getUserById(@PathVariable("id") Long id) {
+        User user = userService.read(id);
+
+        UserDto result = UserDto.fromUser(user);
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     @GetMapping("/age/{age}")
-    public List<User> getUserByAge(@PathVariable Integer age) {
-        return userService.getUsersWithAgeGreater(age);
+    public ResponseEntity<List<UserDto>> getUserByAge(@PathVariable Integer age) {
+        List<User> users = userService.getUsersWithAgeGreater(age);
+
+        return getListResponseEntity(users);
+    }
+
+    private ResponseEntity<List<UserDto>> getListResponseEntity(List<User> users) {
+        if (users.size() == 0) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+
+        List<UserDto> result = new ArrayList<>();
+        for (User user: users) {
+            result.add(UserDto.fromUser(user));
+        }
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     @GetMapping("/color/{articleColor}")
-    public List<User> getUsersByArticleColor (@PathVariable String articleColor) {
+    public ResponseEntity<List<UserDto>> getUsersByArticleColor(@PathVariable String articleColor) {
         Color color = Color.valueOf(articleColor.toUpperCase());
-        return userService.getUsersByArticleColor(color);
+        List<User> users = userService.getUsersByArticleColor(color);
+        return getListResponseEntity(users);
     }
 
     @GetMapping({"/articles/{count}", "/articles"})
-    public List<String> getUserNamesByArticlesCount(@PathVariable(required = false) Integer count) {
+    public ResponseEntity<List<String>> getUserNamesByArticlesCount(@PathVariable(required = false) Integer count) {
         if (count == null) count = 3;
-        return userService.getUserNamesByArticlesCount(count);
+        return new ResponseEntity<> (userService.getUserNamesByArticlesCount(count), HttpStatus.OK);
     }
 
     @PostMapping
-    public User create(@RequestBody User user) {
+    public ResponseEntity<UserDto> create(@RequestBody User user) {
         userService.create(user);
-        return user;
+        return new ResponseEntity<>(UserDto.fromUser(user), HttpStatus.OK);
     }
 
     @PutMapping("{id}")
-    public User update(@PathVariable("id") User userFromDb,
+    public ResponseEntity<UserDto> update(@PathVariable("id") User userFromDb,
                        @RequestBody User user) {
         user = userService.update(userFromDb, user);
-        return user;
+        return new ResponseEntity<>(UserDto.fromUser(user), HttpStatus.OK);
     }
 
     @DeleteMapping("{id}")

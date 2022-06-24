@@ -42,8 +42,7 @@ public class UserServiceImpl implements UserService{
     }
 
     public List<User> getUsersByArticleColor(Color color) {
-
-        return userRepo.getUsersByArticleColor(color);
+        return userRepo.getUsersByArticleColor(color).stream().distinct().collect(Collectors.toList());
     }
 
     public void create(User user) {
@@ -59,7 +58,10 @@ public class UserServiceImpl implements UserService{
     }
 
     public void delete(User user) {
-        userRepo.delete(user);
+        Optional<User> optionalUser = userRepo.findById(user.getId());
+        if (optionalUser.isPresent()) {
+            userRepo.delete(user);
+        }
     }
 
     public List<String> getUserNamesByArticlesCount(Integer count) {
