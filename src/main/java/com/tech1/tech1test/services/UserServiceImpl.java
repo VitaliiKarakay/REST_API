@@ -42,8 +42,7 @@ public class UserServiceImpl implements UserService{
     }
 
     public List<User> getUsersByArticleColor(Color color) {
-
-        return userRepo.getUsersByArticleColor(color);
+        return userRepo.getUsersByArticleColor(color).stream().distinct().collect(Collectors.toList());
     }
 
     public void create(User user) {
