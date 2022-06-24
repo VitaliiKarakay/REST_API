@@ -1,5 +1,6 @@
 package com.tech1.tech1test.security.jwt;
 
+import com.tech1.tech1test.domain.Role;
 import io.jsonwebtoken.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,8 +14,10 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Date;
+import java.util.List;
 
 @Component
 public class JwtProvider {
@@ -38,14 +41,16 @@ public class JwtProvider {
         secret = Base64.getEncoder().encodeToString(secret.getBytes());
     }
 
-    public String createToken(String username) {
+    public String createToken(String username, List<Role> roles) {
         Claims claims = Jwts.claims().setSubject(username);
+        claims.put("roles", getRoleNames(roles));
 
         Date now = new Date();
         Date validity = new Date(now.getTime() + Long.parseLong(validityInMilliseconds));
 
         return Jwts.builder()
                 .setClaims(claims)
+                .setIssuedAt(now)
                 .setExpiration(validity)
                 .signWith(SignatureAlgorithm.HS256, secret)
                 .compact();
@@ -81,4 +86,14 @@ public class JwtProvider {
             throw new JwtAuthException("JWT token is expired or invalid");
         }
     }
+    private List<String> getRoleNames(List<Role> userRoles) {
+        List<String> result = new ArrayList<>();
+
+        userRoles.forEach(role -> {
+            result.add(role.getName());
+        });
+
+        return result;
+    }
+
 }

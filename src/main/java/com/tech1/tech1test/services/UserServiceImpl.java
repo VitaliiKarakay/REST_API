@@ -1,10 +1,15 @@
 package com.tech1.tech1test.services;
 
 import com.tech1.tech1test.domain.Color;
+import com.tech1.tech1test.domain.Role;
+import com.tech1.tech1test.domain.Status;
 import com.tech1.tech1test.domain.User;
+import com.tech1.tech1test.repository.RoleRepo;
 import com.tech1.tech1test.repository.UserRepo;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -13,9 +18,13 @@ import java.util.stream.Collectors;
 public class UserServiceImpl implements UserService{
 
     private final UserRepo userRepo;
+    private final RoleRepo roleRepo;
+    private final BCryptPasswordEncoder passwordEncoder;
 
-    public UserServiceImpl(UserRepo userRepo) {
+    public UserServiceImpl(UserRepo userRepo, RoleRepo roleRepo, BCryptPasswordEncoder passwordEncoder) {
         this.userRepo = userRepo;
+        this.roleRepo = roleRepo;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public List<User> getAll() {
@@ -56,6 +65,13 @@ public class UserServiceImpl implements UserService{
     }
 
     public void create(User user) {
+        Role userRole = roleRepo.findByName("USER");
+        List<Role> userRoles = new ArrayList<>();
+        userRoles.add(userRole);
+
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setRoles(userRoles);
+        user.setStatus(Status.ACTIVE);
         userRepo.save(user);
     }
 

@@ -73,7 +73,7 @@ public class UserController {
         return new ResponseEntity<> (userService.getUserNamesByArticlesCount(count), HttpStatus.OK);
     }
 
-    @PostMapping
+    @PostMapping("/admin")
     public ResponseEntity<UserDto> create(@RequestBody User user) {
         userService.create(user);
         return new ResponseEntity<>(UserDto.fromUser(user), HttpStatus.OK);

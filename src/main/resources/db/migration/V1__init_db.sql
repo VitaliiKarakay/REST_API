@@ -4,7 +4,7 @@ create table usr
     name varchar(255) not null,
     password varchar(255) not null,
     age  int          not null,
-    status varchar(100),
+    status varchar(100) default 'ACTIVE',
     primary key (id)
 );
 

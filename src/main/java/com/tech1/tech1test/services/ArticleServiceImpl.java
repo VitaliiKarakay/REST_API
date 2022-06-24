@@ -30,6 +30,7 @@ public class ArticleServiceImpl implements ArticleService{
     }
 
     public void create(Article article) {
+
         articleRepo.save(article);
     }
 
