@@ -43,11 +43,12 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public User findByName(String name) {
-        Optional<User> optionalUser = Optional.ofNullable(userRepo.findByUsername(name));
-        User user = new User();
-        if (optionalUser.isPresent()) {
-            user = optionalUser.get();
-        }
+//        Optional<User> optionalUser = Optional.ofNullable(userRepo.findByUsername(name));
+        User user = userRepo.findByUsername(name);
+//        if (optionalUser.isPresent()) {
+//            user = optionalUser.get();
+//        }
+        System.out.println(user);
         return user;
     }
 
