@@ -20,12 +20,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@RequestMapping("auth")
+@RequestMapping()
 public class AuthController {
 
-    private AuthenticationManager authenticationManager;
-    private JwtProvider jwtProvider;
-    private UserService userService;
+    private final AuthenticationManager authenticationManager;
+    private final JwtProvider jwtProvider;
+    private final UserService userService;
 
     @Autowired
     public AuthController(AuthenticationManager authenticationManager, JwtProvider jwtProvider, UserService userService) {

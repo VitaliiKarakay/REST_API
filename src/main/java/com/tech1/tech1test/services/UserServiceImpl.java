@@ -43,7 +43,7 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public User findByName(String name) {
-        Optional<User> optionalUser = Optional.ofNullable(userRepo.findByName(name));
+        Optional<User> optionalUser = Optional.ofNullable(userRepo.findByUsername(name));
         User user = new User();
         if (optionalUser.isPresent()) {
             user = optionalUser.get();
@@ -77,7 +77,7 @@ public class UserServiceImpl implements UserService{
 
     public User update(User userFromDb, User user) {
 
-        userFromDb.setName(user.getName());
+        userFromDb.setUsername(user.getUsername());
         userFromDb.setAge(user.getAge());
         userFromDb.setArticles(userFromDb.getArticles());
         return userRepo.save(userFromDb);

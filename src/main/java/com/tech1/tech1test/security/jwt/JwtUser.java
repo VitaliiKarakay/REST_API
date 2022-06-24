@@ -5,6 +5,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.Date;
 
 
 public class JwtUser implements UserDetails {
@@ -13,13 +14,15 @@ public class JwtUser implements UserDetails {
     private final String username;
     private final String password;
     private final boolean enabled;
+    private final Date lastPasswordResetDate;
     private final Collection<? extends GrantedAuthority> authorities;
 
-    public JwtUser(Long id, String username, String password, boolean enabled, Collection<? extends GrantedAuthority> authorities) {
+    public JwtUser(Long id, String username, String password, boolean enabled, Date lastPasswordResetDate, Collection<? extends GrantedAuthority> authorities) {
         this.id = id;
         this.username = username;
         this.password = password;
         this.enabled = enabled;
+        this.lastPasswordResetDate = lastPasswordResetDate;
         this.authorities = authorities;
     }
     @JsonIgnore
@@ -61,5 +64,10 @@ public class JwtUser implements UserDetails {
     @Override
     public boolean isEnabled() {
         return enabled;
+    }
+
+    @JsonIgnore
+    public Date getLastPasswordResetDate() {
+        return lastPasswordResetDate;
     }
 }

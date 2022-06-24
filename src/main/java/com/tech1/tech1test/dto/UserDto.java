@@ -49,7 +49,7 @@ private Long id;
     public User toUser() {
         User user = new User();
         user.setId(id);
-        user.setName(name);
+        user.setUsername(name);
         user.setAge(age);
         user.setArticles(articles);
 
@@ -59,7 +59,7 @@ private Long id;
     public static UserDto fromUser(User user) {
         UserDto userDto = new UserDto();
         userDto.setId(user.getId());
-        userDto.setName(user.getName());
+        userDto.setName(user.getUsername());
         userDto.setAge(user.getAge());
         userDto.setArticles(user.getArticles());
 

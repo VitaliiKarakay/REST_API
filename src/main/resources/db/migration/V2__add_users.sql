@@ -1,5 +1,5 @@
 insert into usr (name, password, age, status)
-values ('admin','password', 28, 'ACTIVE'),
+values ('admin','$2a$10$HSO54ZDOWmo5PIY0Y43YPexa/JLNy38UY7jayRNcIQXx2efCMdD/S', 28, 'ACTIVE'),
        ('Igor','password', 17, 'ACTIVE'),
        ('Maksim','password', 56, 'ACTIVE'),
        ('Olga','password', 24, 'ACTIVE'),

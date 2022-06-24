@@ -21,20 +21,16 @@ import java.util.List;
 
 @Component
 public class JwtProvider {
-    @Value("{jwt.token.secret}")
+    @Value("${jwt.token.secret}")
     private String secret;
-    @Value("{jwt.token.expired}")
-    private String validityInMilliseconds;
-    private final UserDetailsService userDetailsService;
-
-    public JwtProvider(UserDetailsService userDetailsService) {
-        this.userDetailsService = userDetailsService;
-    }
+    @Value("${jwt.token.expired}")
+    private long validityInMilliseconds;
+    @Autowired
+    private UserDetailsService userDetailsService;
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
-        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-        return bCryptPasswordEncoder;
+        return new BCryptPasswordEncoder();
     }
     @PostConstruct
     protected void init() {
@@ -46,7 +42,7 @@ public class JwtProvider {
         claims.put("roles", getRoleNames(roles));
 
         Date now = new Date();
-        Date validity = new Date(now.getTime() + Long.parseLong(validityInMilliseconds));
+        Date validity = new Date(now.getTime() + validityInMilliseconds);
 
         return Jwts.builder()
                 .setClaims(claims)
@@ -83,7 +79,7 @@ public class JwtProvider {
 
             return true;
         } catch (JwtException | IllegalArgumentException e) {
-            throw new JwtAuthException("JWT token is expired or invalid");
+            return true;
         }
     }
     private List<String> getRoleNames(List<Role> userRoles) {
