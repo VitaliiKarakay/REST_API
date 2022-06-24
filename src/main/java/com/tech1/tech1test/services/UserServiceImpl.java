@@ -22,7 +22,7 @@ public class UserServiceImpl implements UserService{
         return userRepo.findAll();
     }
 
-    public User read(Long id) {
+    public User findById(Long id) {
         Optional<User> optionalUser = userRepo.findById(id);
         User user = new User(0L, "User not exist", 0);
         if (optionalUser.isPresent()) {
@@ -30,6 +30,16 @@ public class UserServiceImpl implements UserService{
         }
         return user;
 
+    }
+
+    @Override
+    public User findByName(String name) {
+        Optional<User> optionalUser = Optional.ofNullable(userRepo.findByName(name));
+        User user = new User();
+        if (optionalUser.isPresent()) {
+            user = optionalUser.get();
+        }
+        return user;
     }
 
     public List<User> getUsersWithAgeGreater(Integer age) {

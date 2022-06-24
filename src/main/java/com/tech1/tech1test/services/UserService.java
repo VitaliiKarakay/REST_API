@@ -8,7 +8,8 @@ import java.util.List;
 public interface UserService {
 
     List<User> getAll();
-    User read(Long id);
+    User findById(Long id);
+    User findByName(String name);
     List<User> getUsersWithAgeGreater(Integer age);
     List<User> getUsersByArticleColor(Color color);
     void create(User user);
