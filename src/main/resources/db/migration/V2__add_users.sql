@@ -1,8 +1,8 @@
-insert into usr (name, age)
-values ('Vitalii', 28),
-       ('Igor', 17),
-       ('Maksim', 56),
-       ('Olga', 24),
-       ('Ivan', 22),
-       ('Oleg', 48),
-       ('Vasilii', 23);
+insert into usr (name, password, age, status)
+values ('admin','password', 28, 'ACTIVE'),
+       ('Igor','password', 17, 'ACTIVE'),
+       ('Maksim','password', 56, 'ACTIVE'),
+       ('Olga','password', 24, 'ACTIVE'),
+       ('Ivan','password', 22, 'ACTIVE'),
+       ('Oleg','password', 48, 'ACTIVE'),
+       ('Vasilii','password', 23, 'ACTIVE');

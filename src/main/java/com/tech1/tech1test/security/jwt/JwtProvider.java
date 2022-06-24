@@ -3,10 +3,12 @@ package com.tech1.tech1test.security.jwt;
 import io.jsonwebtoken.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -19,13 +21,18 @@ public class JwtProvider {
     @Value("{jwt.token.secret}")
     private String secret;
     @Value("{jwt.token.expired}")
-    private Long validityInMilliseconds;
+    private String validityInMilliseconds;
     private final UserDetailsService userDetailsService;
 
     public JwtProvider(UserDetailsService userDetailsService) {
         this.userDetailsService = userDetailsService;
     }
 
+    @Bean
+    public BCryptPasswordEncoder passwordEncoder() {
+        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+        return bCryptPasswordEncoder;
+    }
     @PostConstruct
     protected void init() {
         secret = Base64.getEncoder().encodeToString(secret.getBytes());
@@ -35,7 +42,7 @@ public class JwtProvider {
         Claims claims = Jwts.claims().setSubject(username);
 
         Date now = new Date();
-        Date validity = new Date(now.getTime() + validityInMilliseconds);
+        Date validity = new Date(now.getTime() + Long.parseLong(validityInMilliseconds));
 
         return Jwts.builder()
                 .setClaims(claims)
