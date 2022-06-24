@@ -29,7 +29,7 @@ public class User {
     @JoinColumn(name = "user_id")
     private List<Article> articles;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private List<Role> roles;
 
