@@ -1,7 +1,6 @@
 package com.tech1.tech1test.security;
 
 import com.tech1.tech1test.domain.User;
-import com.tech1.tech1test.security.jwt.JwtUser;
 import com.tech1.tech1test.security.jwt.JwtUserFactory;
 import com.tech1.tech1test.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

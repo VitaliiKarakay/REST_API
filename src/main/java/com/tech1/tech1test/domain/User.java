@@ -5,7 +5,6 @@ import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -39,6 +38,7 @@ public class User {
 
     public User() {
     }
+
     public User(Long id, String username, Integer age) {
         this.id = id;
         this.username = username;

@@ -9,11 +9,14 @@ import com.tech1.tech1test.repository.UserRepo;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
 
     private final UserRepo userRepo;
     private final RoleRepo roleRepo;
@@ -33,7 +36,7 @@ public class UserServiceImpl implements UserService{
         Optional<User> optionalUser = userRepo.findById(id);
         User user = new User(0L, "User not exist", 0);
         if (optionalUser.isPresent()) {
-           user = optionalUser.get();
+            user = optionalUser.get();
         }
         return user;
 

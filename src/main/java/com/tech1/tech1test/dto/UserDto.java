@@ -9,7 +9,7 @@ import java.util.Set;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class UserDto {
 
-private Long id;
+    private Long id;
     private String username;
     private Integer age;
     private Set<Article> articles;

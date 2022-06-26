@@ -6,8 +6,12 @@ import java.util.List;
 
 public interface ArticleService {
     List<Article> getAll();
+
     Article read(Long id);
+
     void create(Article article);
+
     Article update(Article articleFromDb, Article article);
+
     void delete(Article article);
 }

@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-@Table(name = "article", schema = "testdb")
+@Table(name = "article")
 public class Article {
 
     @Id
@@ -70,9 +70,6 @@ public class Article {
                 ", color=" + color +
                 '}';
     }
-
-
-
 
 
 }

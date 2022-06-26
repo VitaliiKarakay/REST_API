@@ -38,7 +38,7 @@ public class ArticleController {
 
     @PutMapping("{id}")
     public ResponseEntity<Article> update(@PathVariable("id") Article articleFromDb,
-                          @RequestBody Article article
+                                          @RequestBody Article article
     ) {
         article = articleService.update(articleFromDb, article);
         return new ResponseEntity<>(article, HttpStatus.OK);

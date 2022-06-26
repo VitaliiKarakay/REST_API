@@ -27,12 +27,11 @@ public class UserController {
     }
 
 
-
     @GetMapping()
     public ResponseEntity<List<UserDto>> getAllUsers() {
         List<User> users = userService.getAll();
         List<UserDto> result = new ArrayList<>();
-        for (User user: users) {
+        for (User user : users) {
             result.add(UserDto.fromUser(user));
         }
         return new ResponseEntity<>(result, HttpStatus.OK);
@@ -59,7 +58,7 @@ public class UserController {
         }
 
         List<UserDto> result = new ArrayList<>();
-        for (User user: users) {
+        for (User user : users) {
             result.add(UserDto.fromUser(user));
         }
         return new ResponseEntity<>(result, HttpStatus.OK);
@@ -77,7 +76,7 @@ public class UserController {
         if (count == null) {
             count = DEFAULT_ARTICLES_COUNT;
         }
-        return new ResponseEntity<> (userService.getUserNamesByArticlesCount(count), HttpStatus.OK);
+        return new ResponseEntity<>(userService.getUserNamesByArticlesCount(count), HttpStatus.OK);
     }
 
     @PostMapping()
@@ -88,7 +87,7 @@ public class UserController {
 
     @PutMapping("{id}")
     public ResponseEntity<UserDto> update(@PathVariable("id") User userFromDb,
-                       @RequestBody User user) {
+                                          @RequestBody User user) {
         user = userService.update(userFromDb, user);
         return new ResponseEntity<>(UserDto.fromUser(user), HttpStatus.OK);
     }

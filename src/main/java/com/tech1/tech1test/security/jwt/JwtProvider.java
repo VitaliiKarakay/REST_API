@@ -14,7 +14,10 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
-import java.util.*;
+import java.util.Base64;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Component
 public class JwtProvider {
@@ -29,6 +32,7 @@ public class JwtProvider {
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
     @PostConstruct
     protected void init() {
         secret = Base64.getEncoder().encodeToString(secret.getBytes());
@@ -79,12 +83,11 @@ public class JwtProvider {
             throw new JwtAuthException("JWT token is expired or invalid");
         }
     }
+
     private Set<String> getRoleNames(Set<Role> userRoles) {
         Set<String> result = new HashSet<>();
 
-        userRoles.forEach(role -> {
-            result.add(role.getName());
-        });
+        userRoles.forEach(role -> result.add(role.getName()));
 
         return result;
     }
