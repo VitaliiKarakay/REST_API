@@ -62,7 +62,6 @@ public class UserDto {
         userDto.setUsername(user.getUsername());
         userDto.setAge(user.getAge());
         userDto.setArticles(user.getArticles());
-        System.out.println(userDto);
         return userDto;
     }
 
