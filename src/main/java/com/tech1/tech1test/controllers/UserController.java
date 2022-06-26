@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("users")
@@ -22,6 +23,8 @@ public class UserController {
     public UserController(UserServiceImpl userServiceImpl) {
         this.userService = userServiceImpl;
     }
+
+
 
     @GetMapping()
     public ResponseEntity<List<UserDto>> getAllUsers() {
@@ -68,7 +71,7 @@ public class UserController {
     }
 
     @GetMapping({"/articles/{count}", "/articles"})
-    public ResponseEntity<List<String>> getUserNamesByArticlesCount(@PathVariable(required = false) Integer count) {
+    public ResponseEntity<Set<String>> getUserNamesByArticlesCount(@PathVariable(required = false) Integer count) {
         if (count == null) count = 3;
         return new ResponseEntity<> (userService.getUserNamesByArticlesCount(count), HttpStatus.OK);
     }

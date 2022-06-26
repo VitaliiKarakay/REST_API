@@ -6,6 +6,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "usr")
@@ -25,15 +26,15 @@ public class User {
     @LastModifiedDate
     @Column(name = "updated")
     private Date updated;
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
-    private List<Article> articles;
+    private Set<Article> articles;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_role",
             joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")})
-    private List<Role> roles;
+    private Set<Role> roles;
 
     public User() {
     }
@@ -59,11 +60,11 @@ public class User {
         this.updated = updated;
     }
 
-    public List<Article> getArticles() {
+    public Set<Article> getArticles() {
         return articles;
     }
 
-    public void setArticles(List<Article> articles) {
+    public void setArticles(Set<Article> articles) {
         this.articles = articles;
     }
 
@@ -107,11 +108,11 @@ public class User {
         this.status = status;
     }
 
-    public List<Role> getRoles() {
+    public Set<Role> getRoles() {
         return roles;
     }
 
-    public void setRoles(List<Role> roles) {
+    public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
 

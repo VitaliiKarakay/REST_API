@@ -4,6 +4,7 @@ import com.tech1.tech1test.domain.Color;
 import com.tech1.tech1test.domain.User;
 
 import java.util.List;
+import java.util.Set;
 
 public interface UserService {
 
@@ -15,6 +16,6 @@ public interface UserService {
     void create(User user);
     User update(User userFromDb, User user);
     void delete(User user);
-    List<String> getUserNamesByArticlesCount(Integer count);
+    Set<String> getUserNamesByArticlesCount(Integer count);
 
 }

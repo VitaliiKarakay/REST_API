@@ -5,14 +5,15 @@ import com.tech1.tech1test.domain.Article;
 import com.tech1.tech1test.domain.User;
 
 import java.util.List;
+import java.util.Set;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class UserDto {
 
 private Long id;
-    private String name;
+    private String username;
     private Integer age;
-    private List<Article> articles;
+    private Set<Article> articles;
 
     public Long getId() {
         return id;
@@ -23,11 +24,11 @@ private Long id;
     }
 
     public String getName() {
-        return name;
+        return username;
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.username = name;
     }
 
     public Integer getAge() {
@@ -38,18 +39,18 @@ private Long id;
         this.age = age;
     }
 
-    public List<Article> getArticles() {
+    public Set<Article> getArticles() {
         return articles;
     }
 
-    public void setArticles(List<Article> articles) {
+    public void setArticles(Set<Article> articles) {
         this.articles = articles;
     }
 
     public User toUser() {
         User user = new User();
         user.setId(id);
-        user.setUsername(name);
+        user.setUsername(username);
         user.setAge(age);
         user.setArticles(articles);
 

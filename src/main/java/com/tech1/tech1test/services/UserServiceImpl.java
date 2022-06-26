@@ -9,9 +9,7 @@ import com.tech1.tech1test.repository.UserRepo;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -67,7 +65,7 @@ public class UserServiceImpl implements UserService{
 
     public void create(User user) {
         Role userRole = roleRepo.findByName("USER");
-        List<Role> userRoles = new ArrayList<>();
+        Set<Role> userRoles = new HashSet<>();
         userRoles.add(userRole);
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -91,7 +89,7 @@ public class UserServiceImpl implements UserService{
         }
     }
 
-    public List<String> getUserNamesByArticlesCount(Integer count) {
-        return userRepo.getUserNamesByArticlesCount(count).stream().distinct().collect(Collectors.toList());
+    public Set<String> getUserNamesByArticlesCount(Integer count) {
+        return new HashSet<>(userRepo.getUserNamesByArticlesCount(count));
     }
 }
