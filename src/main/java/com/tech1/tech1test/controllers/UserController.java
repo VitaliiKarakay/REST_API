@@ -11,10 +11,13 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("users")
 public class UserController {
+
+    private final static int DEFAULT_ARTICLES_COUNT = 3;
 
     private final UserServiceImpl userService;
 
@@ -23,11 +26,12 @@ public class UserController {
         this.userService = userServiceImpl;
     }
 
+
     @GetMapping()
     public ResponseEntity<List<UserDto>> getAllUsers() {
         List<User> users = userService.getAll();
         List<UserDto> result = new ArrayList<>();
-        for (User user: users) {
+        for (User user : users) {
             result.add(UserDto.fromUser(user));
         }
         return new ResponseEntity<>(result, HttpStatus.OK);
@@ -35,7 +39,7 @@ public class UserController {
 
     @GetMapping("{id}")
     public ResponseEntity<UserDto> getUserById(@PathVariable("id") Long id) {
-        User user = userService.read(id);
+        User user = userService.findById(id);
 
         UserDto result = UserDto.fromUser(user);
         return new ResponseEntity<>(result, HttpStatus.OK);
@@ -54,7 +58,7 @@ public class UserController {
         }
 
         List<UserDto> result = new ArrayList<>();
-        for (User user: users) {
+        for (User user : users) {
             result.add(UserDto.fromUser(user));
         }
         return new ResponseEntity<>(result, HttpStatus.OK);
@@ -68,12 +72,14 @@ public class UserController {
     }
 
     @GetMapping({"/articles/{count}", "/articles"})
-    public ResponseEntity<List<String>> getUserNamesByArticlesCount(@PathVariable(required = false) Integer count) {
-        if (count == null) count = 3;
-        return new ResponseEntity<> (userService.getUserNamesByArticlesCount(count), HttpStatus.OK);
+    public ResponseEntity<Set<String>> getUserNamesByArticlesCount(@PathVariable(required = false) Integer count) {
+        if (count == null) {
+            count = DEFAULT_ARTICLES_COUNT;
+        }
+        return new ResponseEntity<>(userService.getUserNamesByArticlesCount(count), HttpStatus.OK);
     }
 
-    @PostMapping
+    @PostMapping()
     public ResponseEntity<UserDto> create(@RequestBody User user) {
         userService.create(user);
         return new ResponseEntity<>(UserDto.fromUser(user), HttpStatus.OK);
@@ -81,7 +87,7 @@ public class UserController {
 
     @PutMapping("{id}")
     public ResponseEntity<UserDto> update(@PathVariable("id") User userFromDb,
-                       @RequestBody User user) {
+                                          @RequestBody User user) {
         user = userService.update(userFromDb, user);
         return new ResponseEntity<>(UserDto.fromUser(user), HttpStatus.OK);
     }

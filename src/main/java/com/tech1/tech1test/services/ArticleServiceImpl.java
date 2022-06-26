@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class ArticleServiceImpl implements ArticleService{
+public class ArticleServiceImpl implements ArticleService {
 
     private final ArticleRepo articleRepo;
 
@@ -30,6 +30,7 @@ public class ArticleServiceImpl implements ArticleService{
     }
 
     public void create(Article article) {
+
         articleRepo.save(article);
     }
 

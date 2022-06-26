@@ -4,15 +4,15 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.tech1.tech1test.domain.Article;
 import com.tech1.tech1test.domain.User;
 
-import java.util.List;
+import java.util.Set;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class UserDto {
 
-private Long id;
-    private String name;
+    private Long id;
+    private String username;
     private Integer age;
-    private List<Article> articles;
+    private Set<Article> articles;
 
     public Long getId() {
         return id;
@@ -22,12 +22,12 @@ private Long id;
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getUsername() {
+        return username;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUsername(String name) {
+        this.username = name;
     }
 
     public Integer getAge() {
@@ -38,18 +38,18 @@ private Long id;
         this.age = age;
     }
 
-    public List<Article> getArticles() {
+    public Set<Article> getArticles() {
         return articles;
     }
 
-    public void setArticles(List<Article> articles) {
+    public void setArticles(Set<Article> articles) {
         this.articles = articles;
     }
 
     public User toUser() {
         User user = new User();
         user.setId(id);
-        user.setName(name);
+        user.setUsername(username);
         user.setAge(age);
         user.setArticles(articles);
 
@@ -59,10 +59,20 @@ private Long id;
     public static UserDto fromUser(User user) {
         UserDto userDto = new UserDto();
         userDto.setId(user.getId());
-        userDto.setName(user.getName());
+        userDto.setUsername(user.getUsername());
         userDto.setAge(user.getAge());
         userDto.setArticles(user.getArticles());
-
+        System.out.println(userDto);
         return userDto;
+    }
+
+    @Override
+    public String toString() {
+        return "UserDto{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", age=" + age +
+                ", articles=" + articles +
+                '}';
     }
 }
