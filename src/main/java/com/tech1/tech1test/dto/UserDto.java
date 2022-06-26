@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.tech1.tech1test.domain.Article;
 import com.tech1.tech1test.domain.User;
 
-import java.util.List;
 import java.util.Set;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -23,11 +22,11 @@ private Long id;
         this.id = id;
     }
 
-    public String getName() {
+    public String getUsername() {
         return username;
     }
 
-    public void setName(String name) {
+    public void setUsername(String name) {
         this.username = name;
     }
 
@@ -60,10 +59,20 @@ private Long id;
     public static UserDto fromUser(User user) {
         UserDto userDto = new UserDto();
         userDto.setId(user.getId());
-        userDto.setName(user.getUsername());
+        userDto.setUsername(user.getUsername());
         userDto.setAge(user.getAge());
         userDto.setArticles(user.getArticles());
-
+        System.out.println(userDto);
         return userDto;
+    }
+
+    @Override
+    public String toString() {
+        return "UserDto{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", age=" + age +
+                ", articles=" + articles +
+                '}';
     }
 }

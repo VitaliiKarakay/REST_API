@@ -17,6 +17,8 @@ import java.util.Set;
 @RequestMapping("users")
 public class UserController {
 
+    private final static int DEFAULT_ARTICLES_COUNT = 3;
+
     private final UserServiceImpl userService;
 
     @Autowired
@@ -72,7 +74,9 @@ public class UserController {
 
     @GetMapping({"/articles/{count}", "/articles"})
     public ResponseEntity<Set<String>> getUserNamesByArticlesCount(@PathVariable(required = false) Integer count) {
-        if (count == null) count = 3;
+        if (count == null) {
+            count = DEFAULT_ARTICLES_COUNT;
+        }
         return new ResponseEntity<> (userService.getUserNamesByArticlesCount(count), HttpStatus.OK);
     }
 
