@@ -1,6 +1,3 @@
-# Tech1_test
-Test task
-
 To run the project you should to set properties in application.properties (server.port, db.username, db.password).
 By default it set on next values:
 server.port=8080
